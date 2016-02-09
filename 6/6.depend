@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1454650589 source:/media/d/OI/program/leetcode/6/6.c
+	<stdlib.h>
+	<string.h>
+
+1454661587 source:/media/d/OI/program/leetcode/6/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
