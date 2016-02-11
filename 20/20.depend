@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1455198376 source:/media/d/OI/program/leetcode/20/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+
