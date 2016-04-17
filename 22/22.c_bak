@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void generate_parenthesis(int left_left,int right_left,char** result,char* one_result,int* returnSize) {
+	int length;
+	int i;
+	char* new_result;
+	if ((0 == left_left) && (0 == right_left)) {
+		length = strlen(one_result);
+		new_result = (char*)malloc((length + 1) * sizeof(char));
+		strcpy(new_result, one_result);
+		result = (char**)realloc(result, ((*returnSize) + 2) * sizeof(char*));
+		result[*returnSize] = new_result;
+		*returnSize += 1;
+	}
+
+	if (0 < left_left) {
+		one_result[strlen(one_result)] = '(';
+		generate_parenthesis(left_left - 1, right_left, result, one_result, returnSize);
+		one_result[strlen(one_result) - 1] = '\0';
+	}
+
+	if (0 < right_left) {
+		if (right_left > left_left) {
+			one_result[strlen(one_result)] = ')';
+			generate_parenthesis(left_left, right_left - 1, result, one_result, returnSize);
+			one_result[strlen(one_result) - 1] = '\0';
+		}
+	}
+}
+
+char** generateParenthesis(int n, int* returnSize) {
+	int i, bits;
+	char** result;
+	char* one_result;
+	result = (char**)malloc(sizeof(char*));
+	bits = n * 2 + 1;
+	one_result = (char*)malloc(bits * sizeof(char));
+	for (i = 0; i < bits; i++) {
+		one_result[i] = '\0';
+	}
+    if (0 == n) {
+    	return NULL;
+    }
+    generate_parenthesis(n, n, result, one_result, returnSize);
+    return result;
+}
+
+int main() {
+	int n, returnSize = 0;
+	int i = 0;
+	char** parenthesis;
+	n = 3;
+	parenthesis = generateParenthesis(n, &returnSize);
+	for (i = 0; i < returnSize; i++) {
+		puts(parenthesis[i]);
+		printf("\n");
+	}
+	return 0;
+}
