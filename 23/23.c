@@ -37,6 +37,20 @@ struct ListNode* mergeTwoLists(struct ListNode* l1, struct ListNode* l2)
     return start->next;
 }
 
+struct ListNode* merge_Lists(struct ListNode** lists, int start, int end) {
+    int mid = (start + end) / 2;
+    struct ListNode* left;
+    struct ListNode* right;
+    if (start == end) {
+        return lists[start];
+    } else if (start > end) {
+        return NULL;
+    }
+    left = merge_Lists(lists, start, mid);
+    right = merge_Lists(lists, mid + 1, end);
+    return mergeTwoLists(left, right);
+}
+
 struct ListNode* mergeKLists(struct ListNode** lists, int listsSize) {
     int i;
     struct ListNode* result;
@@ -46,11 +60,8 @@ struct ListNode* mergeKLists(struct ListNode** lists, int listsSize) {
     if (1 == listsSize) {
     	return lists[0];
     }
-    result = lists[0];
-    for (i = 1; i < listsSize; i++) {
-    	result = mergeTwoLists(result, lists[i]);
-    }
-    return result;
+    result = merge_Lists(lists, 0, listsSize - 1);
+    return result;    
 }
 
 int main() {

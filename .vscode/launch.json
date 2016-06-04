@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "C++ Launch (GDB)",
+            "type": "cppdbg",
+            "request": "launch",
+            "launchOptionType": "Local",
+            "targetArchitecture": "x86",
+            "program": "/media/d/OI/program/leetcode/23/23",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceRoot}",
+            "environment": [],
+            "externalConsole": true
+        },
+        {
+            "name": "C++ Attach (GDB)",
+            "type": "cppdbg",
+            "request": "launch",
+            "launchOptionType": "Local",
+            "targetArchitecture": "x86",
+            "program": "/media/d/OI/program/leetcode/23/23",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceRoot}",
+            "environment": [],
+            "processId": "enter program's process ID",
+            "externalConsole": false
+        }
+    ]
+}
