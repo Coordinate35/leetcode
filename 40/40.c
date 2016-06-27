@@ -9,11 +9,11 @@
 
 void quicksort(int *a, int l, int r) {
     int i, j, temp;
-    int pivot = a[l];
+    int privot = a[l];
     j = l;
     if (l < r) {
         for (i = l; i <= r; i++) {
-            if (a[i] < pivot) {
+            if (a[i] < privot) {
                 temp = a[j];
                 a[j] = a[i];
                 a[i] = a[j + 1];
