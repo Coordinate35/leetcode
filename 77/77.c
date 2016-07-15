@@ -12,15 +12,21 @@ int** combine(int n, int k, int** columnSizes, int* returnSize) {
     int col = 0;
     int i;
     *returnSize = 0;
-    result = (int**)malloc((*returnSize + 1) * sizeof(int*));
-    result[0] = (int*)malloc(k * sizeof(int));
+    result = (int**)malloc((*returnSize + 3) * sizeof(int*));
+    result[0] = (int*)malloc((k + 3) * sizeof(int));
     result[0][0] = 1;
     while (col >= 0) {
-        while (result[*returnSize][col] > col + k + 1) {
+        while ((col >= 0) && (result[*returnSize][col] > n - k + 1 + col)) {
             col -= 1;
-            result[*returnSize][col] += 1;
+            if (col >=0) {
+                result[*returnSize][col] += 1;
+            }
         }
         if (col < 0) {
+            columnSizes[0] = (int*)malloc((*returnSize + 3) * sizeof(int));
+            for (i = 0; i < *returnSize; i++) {
+                (*columnSizes)[i] = k;
+            }
             return result;
         }
         while (col + 1 < k) {
@@ -29,27 +35,30 @@ int** combine(int n, int k, int** columnSizes, int* returnSize) {
         }
         while (result[*returnSize][col] <= n) {
             *returnSize += 1;
-            result = realloc(result, (*returnSize + 1) * sizeof(int*));
-            result[*returnSize] = (int*)malloc(k * sizeof(int));
+            result = realloc(result, (*returnSize + 3) * sizeof(int*));
+            result[*returnSize] = (int*)malloc((k + 3) * sizeof(int));
             for (i = 0; i < k; i++) {
                 result[*returnSize][i] = result[*returnSize - 1][i];
             }
             result[*returnSize][col] += 1;
         }
     }
-    *columnSizes = (int*)malloc((*returnSize) * sizeof(int));
-    for (i = 0; i < *returnSize; i++) {
-        (*columnSizes)[i] = k;
-    }
     return result;
 }
 
 int main() {
-    int n = 4;
+    int n = 3;
     int k = 2;
     int **result;
     int *columnSizes;
     int returnSize;
+    int i, j;
     result = combine(n, k, &columnSizes, &returnSize);
+    for (i = 0; i < returnSize; i++) {
+        for (j = 0; j < columnSizes[i]; j++) {
+            printf("%d ", result[i][j]);
+        }
+        printf("\n");
+    }
     return 0;
 }
