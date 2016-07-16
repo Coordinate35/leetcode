@@ -54,8 +54,8 @@ int removeDuplicates(int* nums, int numsSize) {
 }
 
 int main() {
-    int nums[] = {0,0,1,1,1,2,2,2,3,3,4]};
-    int numsSize = ;
+    int nums[] = {0,0,1,1,1,2,2,2,3,3,4};
+    int numsSize = 11;
     int returnSize = removeDuplicates(nums, numsSize);
     return 0;
 }
