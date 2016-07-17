@@ -47,8 +47,8 @@ int** combine(int n, int k, int** columnSizes, int* returnSize) {
 }
 
 int main() {
-    int n = 3;
-    int k = 2;
+    int n = 6;
+    int k = 3;
     int **result;
     int *columnSizes;
     int returnSize;
