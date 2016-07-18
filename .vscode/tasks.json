@@ -4,7 +4,7 @@
     "version": "0.1.0",
     "command": "gcc",
     // "isShellCommand": true,
-    "args": ["-g", "80.c", "-o", "80"],
+    "args": ["-g", "84.c", "-o", "84"],
     // "showOutput": "always"
     "problemMatcher": {
         "owner": "cpp",

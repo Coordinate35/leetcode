@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 int removeDuplicates(int* nums, int numsSize) {
-    int* result;
+    int *result;
     int result_pointer = 0;
     int allow_appearance = 2;
     int appeared_number;
@@ -15,7 +15,7 @@ int removeDuplicates(int* nums, int numsSize) {
         appeared_number = 1;
         result[result_pointer] = nums[i];
         result_pointer += 1;
-        while (nums[i + 1] == nums[i]) {
+        while ((nums[i + 1] == nums[i]) && (i + 1 < numsSize)) {
             i += 1;
             if (appeared_number < allow_appearance) {
                 result[result_pointer] = nums[i];
