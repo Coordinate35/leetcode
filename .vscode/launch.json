@@ -10,8 +10,10 @@
             // "program": "/media/d/OI/program/leetcode/77/77",
             // "args": [],
             // "stopAtEntry": false,
-            "target": "./84/84",
-            "cwd": "${workspaceRoot}"
+            // "target": "./84/84",
+            "target": "${file}.o",
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": "gcc"
             // "environment": [],
             // "externalConsole": "target"
         }
