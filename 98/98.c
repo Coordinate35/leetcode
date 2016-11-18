@@ -33,7 +33,7 @@ bool isValidBST(struct TreeNode* root) {
     int *nums;
     int numsSize = 0;
     int i;
-    nums = (int*)malloc((numsSize + 1)* sizeof(int));
+    nums = (int*)malloc((numsSize + 1) * sizeof(int));
     nums = bst_check(root, nums, &numsSize);
     for (i = 1; i < numsSize; i++) {
         if (nums[i] <= nums[i - 1]) {
