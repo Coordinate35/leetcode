@@ -1,36 +1,35 @@
+// {
+//     "version": "0.2.0",
+//     "configurations": [{
+//         "name": "Debug",
+//         "type": "gdb",
+//         "request": "launch",
+//         "target": "${file}.o",
+//         "cwd": "${workspaceRoot}",
+//         "preLaunchTask": "gcc"
+//     }]
+// }
+
 {
     "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "C++ Launch (GDB)",
-            "type": "gdb",
-            "request": "launch",
-            // "launchOptionType": "Local",
-            // "targetArchitecture": "x86",
-            // "program": "/media/d/OI/program/leetcode/77/77",
-            // "args": [],
-            // "stopAtEntry": false,
-            // "target": "./84/84",
-            "target": "${file}.o",
-            "cwd": "${workspaceRoot}",
-            "preLaunchTask": "gcc"
-            // "environment": [],
-            // "externalConsole": "target"
-        }
-        // },
-        // {
-        //     "name": "C++ Attach (GDB)",
-        //     "type": "cppdbg",
-        //     "request": "launch",
-        //     "launchOptionType": "Local",
-        //     "targetArchitecture": "x86",
-        //     "program": "/media/d/OI/program/leetcode/77/77",
-        //     "args": [],
-        //     "stopAtEntry": false,
-        //     "cwd": "${workspaceRoot}",
-        //     "environment": [],
-        //     "processId": "enter program's process ID",
-        //     "externalConsole": false
-        // }
-    ]
+    "configurations": [{
+        "name": "C++ Launch",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${file}.o",
+        "stopAtEntry": false,
+        "cwd": "${workspaceRoot}",
+        "linux": {
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        "osx": {
+            "MIMode": "lldb"
+        },
+        "windows": {
+            "MIMode": "gdb",
+            "miDebuggerPath": "C:\\MinGw\\bin\\gdb.exe"
+        },
+        "preLaunchTask": "gcc"
+    }]
 }

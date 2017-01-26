@@ -12,7 +12,7 @@ bool hasCycle(struct ListNode *head) {
     if (NULL == head) {
         return false;
     }
-    while (front->next && front->next->next) {
+    while ((front->next) && (front->next->next)) {
         front = front->next->next;
         last = last->next;
         if (front == last) {
