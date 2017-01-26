@@ -17,7 +17,7 @@ bool is_palindrome(char *s, int start, int end) {
     return start >= end;
 }
 
-void dfs(char *s, char ***result, int** columnSize, int *returnSize, int* cut_point, int cut_number, int start) {
+char*** dfs(char *s, char ***result, int** columnSize, int *returnSize, int* cut_point, int cut_number, int start) {
     int length = strlen(s);
     int i, j;
     int end = length - 1;
@@ -26,7 +26,7 @@ void dfs(char *s, char ***result, int** columnSize, int *returnSize, int* cut_po
         *columnSize = realloc(*columnSize, (*returnSize) * sizeof(int));
         result = realloc(result, (*returnSize) * sizeof(char**));
         result[*returnSize - 1] = (char**)malloc(cut_number * sizeof(char*));
-        for (i = 0; i <= cut_number; i++) {
+        for (i = 0; i < cut_number; i++) {
             if (0 == i) {
                 result[*returnSize - 1][i] = (char*)malloc((cut_point[i] + 1) * sizeof(char));
                 for (j = 0; j < cut_point[i]; j++) {
@@ -34,22 +34,23 @@ void dfs(char *s, char ***result, int** columnSize, int *returnSize, int* cut_po
                 }
             } else {
                 result[*returnSize - 1][i] = (char*)malloc((cut_point[i] - cut_point[i - 1] + 1) * sizeof(char));
-                for (j = 0; j < cut_point[i - 1] - cut_point[i]; j++) {
-                    result[*returnSize - 1][i][j] = s[cut_point[i - 1] + j + 1];
+                for (j = 0; j < cut_point[i] - cut_point[i - 1]; j++) {
+                    result[*returnSize - 1][i][j] = s[cut_point[i - 1] + j];
                 }
             }
-            s[j] = '\0';
+            result[*returnSize - 1][i][j] = '\0';
         }
-        (*columnSize)[*returnSize - 1] = cut_number + 1;
+        (*columnSize)[*returnSize - 1] = cut_number;
     }
 
     while (end >= start) {
         if (is_palindrome(s, start, end)) {
             cut_point[cut_number] = end + 1;
-            dfs(s, result, columnSize, returnSize, cut_point, cut_number + 1, end + 1);
+            result = dfs(s, result, columnSize, returnSize, cut_point, cut_number + 1, end + 1);
         }
         end -= 1;
     }
+    return result;
 }
 
 char*** partition(char* s, int** columnSizes, int* returnSize) {
@@ -59,12 +60,14 @@ char*** partition(char* s, int** columnSizes, int* returnSize) {
     result = (char***)malloc(0);
     *columnSizes = (int*)malloc(0);
     *returnSize = 0;
-    dfs(s, result, columnSizes, returnSize, cut_point, 0, 0);
+    result = dfs(s, result, columnSizes, returnSize, cut_point, 0, 0);
     return result;
 }
 
 int main() {
-    char s[] = "aab";
+    // char s[] = "fff";
+    // char s[] = "aab";
+    char s[] = "seeslaveidemonstrateyetartsnomedievalsees";
     int *columnSizes;
     int returnSize;
     int i, j;
