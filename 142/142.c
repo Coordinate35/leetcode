@@ -10,13 +10,9 @@ struct ListNode {
 struct ListNode *detectCycle(struct ListNode *head) {
     struct ListNode *front;
     struct ListNode *last;
-    struct ListNode *meet = NULL;
-    int loopLength = 1;
-    int notLoopLength = 0;
-    int i;
-    bool finded = false;
-
+    struct ListNode *first_meeting_node;
     front = last = head;
+    first_meeting_node = NULL;
     if (NULL == head) {
         return NULL;
     }
@@ -24,30 +20,20 @@ struct ListNode *detectCycle(struct ListNode *head) {
         front = front->next->next;
         last = last->next;
         if (front == last) {
-            meet = front;
+            first_meeting_node = front;
+            break;
         }
     }
-    if (NULL == meet) {
+    if (NULL == first_meeting_node) {
         return NULL;
     }
-    front = meet->next;
-    while (meet != front) {
+    front = head;
+    last = first_meeting_node;
+    while (front != last) {
         front = front->next;
-        loopLength += 1;
-    }
-    last = head;
-    while ( ! finded) {
-        front = last;
-        for (i = 0; i < loopLength; i++) {
-            front = front->next;
-        }
-        if (front == last) {
-            finded = true;
-        }
         last = last->next;
     }
-    
-    return NULL;
+    return front;
 }
 
 int main() {
