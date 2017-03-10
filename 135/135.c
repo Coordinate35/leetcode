@@ -13,7 +13,6 @@ int candy(int* ratings, int ratingsSize)
     }
     candies[0] = 1;
     compensate[0] = 0;
-    printf("1 ");
     for (i = 1; i < ratingsSize; ++i) {
         if (ratings[i] > ratings[i - 1]) {
             candies[i] = candies[i - 1] + 1;
@@ -30,12 +29,7 @@ int candy(int* ratings, int ratingsSize)
             first_compensate = compensate[i] > (candies[i - compensate[i]] - 1) ? compensate[i] + 1 - candies[i - compensate[i]] : 0;
             sum += ((compensate[i] - 1) * compensate[i] / 2) + first_compensate;
         }
-        printf("%d ", candies[i]);
     }
     sum += candies[0];
-    printf("\n");
-    for (i = 0; i < ratingsSize; ++i) {
-        printf("%d ", compensate[i]);
-    }
     return sum;
 }
