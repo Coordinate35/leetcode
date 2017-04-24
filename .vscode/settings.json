@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "*h*h*hfunctional": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "string": "cpp"
     }
 }
