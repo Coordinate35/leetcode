@@ -7,9 +7,11 @@
             ],
             "browse": {
                 "path": [
-                    "/usr/include/"
+                    "/usr/include/",
+                    "${workspaceRoot}"
                 ]
-            }
+            },
+            "intelliSenseMode": "clang-x64"
         },
         {
             "name": "Linux",
@@ -18,9 +20,11 @@
             ],
             "browse": {
                 "path": [
-                    "/usr/include"
+                    "/usr/include",
+                    "${workspaceRoot}"
                 ]
-            }
+            },
+            "intelliSenseMode": "clang-x64"
         },
         {
             "name": "Win32",
@@ -29,14 +33,17 @@
             ],
             "browse": {
                 "path": [
-                    "c:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include"
+                    "c:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include",
+                    "${workspaceRoot}"
                 ]
-            }
+            },
+            "intelliSenseMode": "msvc-x64"
         }
     ],
     "clang_format": {
         "style": "file",
         "fallback-style": "LLVM",
         "sort-includes": false
-    }
+    },
+    "version": 2
 }
