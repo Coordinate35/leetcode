@@ -1,91 +1,115 @@
-#include <cstddef>
-struct linkNode {
+#include <stdlib.h>
+
+typedef struct linkNode{
   struct linkNode *prev;
-  struct linkNode *post;
-  int val;
-};
+  struct linkNode *next;
+  int value;
+} LinkNode;
 
 typedef struct {
-  void *index[10001];
-  struct linkNode *value;
-  struct linkNode *last;
   int capacity;
+  int count;
+  LinkNode privot;
+  LinkNode *index[10001];
 } LRUCache;
 
+LRUCache *lRUCacheCreate(int capacity);
+int lRUCacheGet(LRUCache *obj, int key);
+void lRUCachePut(LRUCache *obj, int key, int value);
+void lRUCacheFree(LRUCache *obj);
 
 LRUCache* lRUCacheCreate(int capacity) {
-  LRUCache *obj;
   int i;
-
-  obj = (LRUCache*)malloc(sizeof(LRUCache));
+  
+  LRUCache *obj = (LRUCache*)malloc(sizeof(LRUCache));
+  
   if (obj == NULL) {
 	return NULL;
   }
-  obj->capacity = capacity;
-  if (capacity < 1) {
-	return obj
-  }
+
+  obj->capacity = 0;
+  obj->count = 0;
+  obj->privot.next = NULL;
+  obj->privot.prev = NULL;
+  obj->privot.value = 0;
+
   for (i = 0; i < 10001; i++) {
 	obj->index[i] = NULL;
   }
-
-  obj->value = (struct linkNode*)malloc(capacity * sizeof(struct linkNode));
-  if (obj->value == NULL) {
-	return NULL;
-  }
-
-  obj->value->prev == NULL;
-  obj->value->val = -1;  
-  if (capacity == 1) {
-	obj->value->post = NULL;
-  } else {
-	obj->value->post = &obj->value[1];
-	for (i = 1; i < capacity - 1; i++) {
-	  obj->value[i].prev = &obj->value[i-1];
-	  obj->value[i].post = &obj->value[i+1];
-	  obj->value[i].val = -1;
-	}
-	obj->value[capacity-1].prev = &obj->value[capacity-2];
-	obj->value[capacity-1].post = NULL;
-	obj->value[capacity-1].val = -1;
-  }
-
-  obj->last = NULL;
   
   return obj;
 }
 
 int lRUCacheGet(LRUCache* obj, int key) {
-  
-}
+  if (obj->index[key] != NULL) {
+	return obj->index[key]->value;
+  }
 
-void lRUCacheEliminate(LRUCache *obj) {
+  return -1;
 }
 
 void lRUCachePut(LRUCache* obj, int key, int value) {
-  struct linkNode *target;
+  LinkNode *node, *out;
   
-  if (obj == NULL) {
-	return;
-  }
-
   if (obj->index[key] == NULL) {
-	if (obj->value[obj->capacity-1].val != -1) {
-	  lRUCacheEliminate(obj);
+	node = (LinkNode*)malloc(sizeof(LinkNode));
+	if (node == NULL) {
+	  return;
+	}
+	if (obj->count < obj->capacity) {
+	  obj->index[key] = node;
+	  node->value = value;
+
+	  if (obj->privot.next == NULL) {
+		obj->privot.next = node;
+		obj->privot.prev = node;
+		node->next = &obj->privot;
+		node->prev = &obj->privot;
+	  } else {
+		obj->privot.next->prev = node;
+		node->next = obj->privot.next;
+		node->prev = &obj->privot;
+		obj->privot.next = node;
+	  }
+	  obj->count++;
+
+	  return;
+	} else {
+	  out = obj->privot.prev;
+	  
+	  out->prev->next = &obj->privot;
+	  obj->privot.prev = out->prev;
+	  node->next = obj->privot.next;
+	  node->prev = &obj->privot;
+	  obj->privot.next->prev = node;
+	  obj->privot.next = node;
+
+	  obj->index[key] = NULL;
+	  free(out);
+	}
+  } else {
+	node = obj->index[key];
+	
+	obj->index[key]->value = value;
+
+	node->prev->next = node->next;
+	node->next->prev = node->prev;
+
+	node->next = obj->privot.next;
+	node->prev = &obj->privot;
+	obj->privot.next = node;
+	node->next->prev = node;
+  }
+}
+
+void lRUCacheFree(LRUCache* obj) {
+  int i;
+
+  for (i = 0; i < 10001; i++) {
+	if (obj->index[i] != NULL) {
+	  free(obj->index[i]);
 	}
   }
-}
 
-void lRUCacheFree(LRUCache *obj) {
-  
+  free(obj);
 }
-
-/**
- * Your LRUCache struct will be instantiated and called as such:
- * LRUCache* obj = lRUCacheCreate(capacity);
- * int param_1 = lRUCacheGet(obj, key);
- 
- * lRUCachePut(obj, key, value);
- 
- * lRUCacheFree(obj);
-*/
