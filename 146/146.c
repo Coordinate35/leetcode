@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 
 typedef struct linkNode{
   struct linkNode *prev;
@@ -27,7 +28,7 @@ LRUCache* lRUCacheCreate(int capacity) {
 	return NULL;
   }
 
-  obj->capacity = 0;
+  obj->capacity = capacity;
   obj->count = 0;
   obj->privot.next = NULL;
   obj->privot.prev = NULL;
@@ -56,6 +57,8 @@ void lRUCachePut(LRUCache* obj, int key, int value) {
 	if (node == NULL) {
 	  return;
 	}
+	node->value = value;
+	
 	if (obj->count < obj->capacity) {
 	  obj->index[key] = node;
 	  node->value = value;
@@ -112,4 +115,30 @@ void lRUCacheFree(LRUCache* obj) {
   }
 
   free(obj);
+}
+
+
+int main() {
+  LRUCache *c;
+  int r;
+
+  c = lRUCacheCreate(2);
+  lRUCachePut(c, 1, 1);
+  lRUCachePut(c, 2, 2);
+  r = lRUCacheGet(c, 1);
+  printf("%d\n", r);
+  lRUCachePut(c, 3, 3);
+  r = lRUCacheGet(c, 2);
+  printf("%d\n", r);
+  lRUCachePut(c, 4, 4);
+  r = lRUCacheGet(c, 1);    // 返回 -1 (未找到)
+  printf("%d\n", r);
+  r = lRUCacheGet(c, 3);    // 返回 3
+  printf("%d\n", r);
+  r = lRUCacheGet(c, 4);    // 返回 4
+  printf("%d\n", r);
+
+  
+  
+  return 0;
 }
