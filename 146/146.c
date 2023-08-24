@@ -5,6 +5,7 @@ typedef struct linkNode{
   struct linkNode *prev;
   struct linkNode *next;
   int value;
+  int key;
 } LinkNode;
 
 typedef struct {
@@ -42,11 +43,23 @@ LRUCache* lRUCacheCreate(int capacity) {
 }
 
 int lRUCacheGet(LRUCache* obj, int key) {
-  if (obj->index[key] != NULL) {
-	return obj->index[key]->value;
+  LinkNode *node;
+
+  node = obj->index[key];
+  
+  if (node == NULL) {
+	return -1;
   }
 
-  return -1;
+  node->prev->next = node->next;
+  node->next->prev = node->prev;
+
+  node->next = obj->privot.next;
+  node->prev = &obj->privot;
+  obj->privot.next->prev = node;
+  obj->privot.next = node;
+	
+  return obj->index[key]->value;
 }
 
 void lRUCachePut(LRUCache* obj, int key, int value) {
@@ -57,7 +70,9 @@ void lRUCachePut(LRUCache* obj, int key, int value) {
 	if (node == NULL) {
 	  return;
 	}
+	obj->index[key] = node;
 	node->value = value;
+	node->key = key;
 	
 	if (obj->count < obj->capacity) {
 	  obj->index[key] = node;
@@ -87,7 +102,7 @@ void lRUCachePut(LRUCache* obj, int key, int value) {
 	  obj->privot.next->prev = node;
 	  obj->privot.next = node;
 
-	  obj->index[key] = NULL;
+	  obj->index[out->key] = NULL;
 	  free(out);
 	}
   } else {
